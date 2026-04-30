@@ -27,7 +27,7 @@ export default function Home() {
         <div className="feature-card">
           <span className="feature-icon">⏱️</span>
           <h3>Exam Mode</h3>
-          <p>Simulate real exam conditions with a timer</p>
+          <p>60 random questions, 100 min timer — real exam simulation</p>
         </div>
         <div className="feature-card">
           <span className="feature-icon">📊</span>

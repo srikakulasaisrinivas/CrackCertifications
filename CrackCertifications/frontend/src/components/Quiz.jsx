@@ -25,7 +25,9 @@ export default function Quiz() {
   useEffect(() => {
     fetchQuestions(true)
       .then(data => {
-        setQuestions(data);
+        // Exam mode: pick 60 random questions
+        const limited = isPractice ? data : data.slice(0, 60);
+        setQuestions(limited);
         setLoading(false);
       })
       .catch(err => {
@@ -104,7 +106,7 @@ export default function Quiz() {
         <h2>{isPractice ? '📝 Practice Mode' : '⏱️ Exam Mode'} — GH300</h2>
         <div className="quiz-header-right">
           {!isPractice && !quiz.submitted && (
-            <Timer duration={60 * 60} onTimeUp={handleTimeUp} />
+            <Timer duration={100 * 60} onTimeUp={handleTimeUp} />
           )}
           <span className="question-counter">
             {quiz.currentIndex + 1} / {questions.length}

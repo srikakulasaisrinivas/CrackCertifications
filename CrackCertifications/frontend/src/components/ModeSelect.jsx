@@ -24,8 +24,8 @@ export default function ModeSelect() {
           <span className="mode-icon">⏱️</span>
           <h3>Exam Mode</h3>
           <ul>
-            <li>Timed exam simulation (60 min)</li>
-            <li>No immediate feedback</li>
+            <li>Timed exam simulation (100 min)</li>
+            <li>60 random questions from question bank</li>
             <li>Results shown after submission</li>
             <li>Flag questions for review</li>
           </ul>
