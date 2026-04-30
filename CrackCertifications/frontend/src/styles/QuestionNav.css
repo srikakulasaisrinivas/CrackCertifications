@@ -1,0 +1,117 @@
+.question-nav {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  height: fit-content;
+  position: sticky;
+  top: 1rem;
+}
+
+.question-nav h4 {
+  margin-bottom: 1rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-bottom: 1rem;
+}
+
+.nav-item {
+  position: relative;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: all 0.15s;
+}
+.nav-item:hover {
+  border-color: var(--primary-light);
+  color: var(--text);
+}
+
+.nav-item.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.nav-item.answered {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.nav-item.active.answered {
+  background: var(--primary);
+  color: white;
+}
+
+.nav-item.flagged {
+  border-color: var(--warning);
+}
+
+.flag-dot {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  font-size: 0.6rem;
+}
+
+.nav-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.nav-legend span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  display: inline-block;
+  border: 1px solid var(--border);
+}
+.dot.answered {
+  background: rgba(16, 185, 129, 0.3);
+  border-color: var(--success);
+}
+.dot.active {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.dot.flagged {
+  border-color: var(--warning);
+  background: rgba(245, 158, 11, 0.3);
+}
+
+@media (max-width: 768px) {
+  .question-nav {
+    position: static;
+  }
+  .nav-grid {
+    grid-template-columns: repeat(9, 1fr);
+  }
+}
+

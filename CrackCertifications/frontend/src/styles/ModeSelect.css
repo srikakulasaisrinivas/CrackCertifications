@@ -1,0 +1,63 @@
+.mode-select {
+  text-align: center;
+  padding: 2rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.mode-select h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.mode-description {
+  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+}
+
+.mode-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.mode-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.mode-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.15);
+}
+
+.mode-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.mode-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.mode-card ul {
+  text-align: left;
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+.mode-card li {
+  padding: 0.3rem 0;
+  color: var(--text-muted);
+}
+.mode-card li::before {
+  content: '✓ ';
+  color: var(--success);
+  font-weight: bold;
+}
+

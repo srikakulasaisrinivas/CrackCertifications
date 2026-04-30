@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: crack-certification-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: JAVA_OPTS
+        value: -Xmx256m
+    plan: free
+
