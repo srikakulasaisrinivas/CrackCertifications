@@ -1,10 +1,13 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import MarkdownText from './MarkdownText';
 import '../styles/Summary.css';
 
 export default function Summary({ score, questions, answers, results, flagged, onRetake, onReviewFlagged }) {
   const percentage = Math.round((score.correct / score.total) * 100);
   const passed = percentage >= 70;
   const [expandedQ, setExpandedQ] = useState(null);
+  const navigate = useNavigate();
 
   const flaggedQuestions = questions
     .map((q, idx) => ({ ...q, index: idx }))
@@ -59,7 +62,7 @@ export default function Summary({ score, questions, answers, results, flagged, o
       )}
 
       <div className="summary-details">
-        <h3>📋 All Questions — Click to expand explanation</h3>
+        <h3>📋 All Questions — Click to review</h3>
         <div className="detail-list">
           {questions.map((q, idx) => {
             const userAns = answers[q.id] || [];
@@ -71,7 +74,7 @@ export default function Summary({ score, questions, answers, results, flagged, o
             const isExpanded = expandedQ === q.id;
 
             return (
-              <div key={q.id}>
+              <div key={q.id} className="detail-wrapper">
                 <div
                   className={`detail-item ${wasAnswered ? (isCorrect ? 'correct' : 'wrong') : 'skipped'}`}
                   onClick={() => setExpandedQ(isExpanded ? null : q.id)}
@@ -82,14 +85,36 @@ export default function Summary({ score, questions, answers, results, flagged, o
                     {wasAnswered ? (isCorrect ? '✅' : '❌') : '⬜'}
                   </span>
                   <span className="detail-text">{q.text.substring(0, 80)}...</span>
-                  <span className="detail-answer">
-                    Your: {userAns.join(', ') || '—'} | Correct: {correctAns.join(', ')}
-                  </span>
+                  <span className="detail-expand">{isExpanded ? '▲' : '▼'}</span>
                 </div>
-                {isExpanded && explanation && (
-                  <div className="detail-explanation">
-                    <strong>💡 Explanation</strong>
-                    <p>{explanation}</p>
+                {isExpanded && (
+                  <div className="detail-expanded">
+                    <div className="detail-full-question">
+                      <h4>{q.text}</h4>
+                      <div className="detail-options">
+                        {q.options.map(opt => {
+                          const isSelected = userAns.includes(opt.label);
+                          const isCorrectOpt = correctAns.includes(opt.label);
+                          let cls = 'detail-option';
+                          if (isCorrectOpt) cls += ' detail-opt-correct';
+                          else if (isSelected) cls += ' detail-opt-wrong';
+                          return (
+                            <div key={opt.label} className={cls}>
+                              <span className="detail-opt-label">{opt.label}</span>
+                              <span className="detail-opt-text">{opt.text}</span>
+                              {isSelected && <span className="detail-opt-tag">Your answer</span>}
+                              {isCorrectOpt && <span className="detail-opt-tag correct-tag">✓ Correct</span>}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    {explanation && (
+                      <div className="detail-explanation">
+                        <strong>💡 Explanation</strong>
+                        <MarkdownText text={explanation} />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -101,6 +126,9 @@ export default function Summary({ score, questions, answers, results, flagged, o
       <div className="summary-actions">
         <button className="btn btn-primary btn-lg" onClick={onRetake}>
           🔄 Retake Exam
+        </button>
+        <button className="btn btn-outline btn-lg" onClick={() => navigate('/feedback')}>
+          💬 Give Feedback
         </button>
       </div>
     </div>

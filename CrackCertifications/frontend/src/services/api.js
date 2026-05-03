@@ -37,7 +37,17 @@ export async function checkAnswer(questionId, userAnswers) {
   const correctAnswers = await findCorrectAnswers(questionId, optionLabels, q.answerHash, q.type);
 
   // Decrypt explanation using the correct answer key
-  const explanation = await decryptExplanation(q.encryptedExplanation, questionId, correctAnswers);
+  let explanation = await decryptExplanation(q.encryptedExplanation, questionId, correctAnswers);
+
+  // Fallback: generate explanation if decryption returned empty
+  if (!explanation && correctAnswers.length > 0) {
+    const correctOptionTexts = correctAnswers.map(label => {
+      const opt = q.options.find(o => o.label === label);
+      return opt ? `${label}. ${opt.text}` : label;
+    });
+    explanation = `The correct answer${correctAnswers.length > 1 ? 's are' : ' is'} ${correctOptionTexts.join(' and ')}. ` +
+      `This is the most accurate choice based on the GitHub Copilot certification (GH-300) exam objectives.`;
+  }
 
   return { correct, correctAnswers, explanation };
 }

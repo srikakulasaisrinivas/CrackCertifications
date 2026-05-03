@@ -17,15 +17,14 @@ export default function Quiz() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showSummary, setShowSummary] = useState(false);
-  // Stores server-verified results: { [questionId]: { correct, correctAnswers, explanation } }
   const [results, setResults] = useState({});
+  const [paused, setPaused] = useState(false);
 
   const quiz = useQuizState(questions);
 
   useEffect(() => {
     fetchQuestions(true)
       .then(data => {
-        // Exam mode: pick 60 random questions
         const limited = isPractice ? data : data.slice(0, 60);
         setQuestions(limited);
         setLoading(false);
@@ -36,7 +35,6 @@ export default function Quiz() {
       });
   }, []);
 
-  // Practice mode: reveal answer by calling the backend
   const handleReveal = async (questionId) => {
     const userAnswers = quiz.answers[questionId] || [];
     try {
@@ -44,12 +42,10 @@ export default function Quiz() {
       setResults(prev => ({ ...prev, [questionId]: result }));
       quiz.revealAnswer(questionId);
     } catch {
-      // fallback: still reveal locally
       quiz.revealAnswer(questionId);
     }
   };
 
-  // Exam mode: submit all answers at once
   const handleSubmit = async () => {
     quiz.submitExam();
     try {
@@ -98,6 +94,21 @@ export default function Quiz() {
     );
   }
 
+  // Pause overlay
+  if (paused) {
+    return (
+      <div className="quiz-paused-overlay">
+        <div className="quiz-paused-card">
+          <h2>⏸️ Exam Paused</h2>
+          <p>Take a breather. Your progress is saved.</p>
+          <button className="btn btn-primary btn-lg" onClick={() => setPaused(false)}>
+            ▶️ Resume Exam
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   const currentResult = results[quiz.currentQuestion?.id];
 
   return (
@@ -106,7 +117,12 @@ export default function Quiz() {
         <h2>{isPractice ? '📝 Practice Mode' : '⏱️ Exam Mode'} — GH300</h2>
         <div className="quiz-header-right">
           {!isPractice && !quiz.submitted && (
-            <Timer duration={100 * 60} onTimeUp={handleTimeUp} />
+            <>
+              <button className="btn btn-outline btn-pause" onClick={() => setPaused(true)}>
+                ⏸️ Pause
+              </button>
+              <Timer duration={100 * 60} onTimeUp={handleTimeUp} paused={paused} />
+            </>
           )}
           <span className="question-counter">
             {quiz.currentIndex + 1} / {questions.length}

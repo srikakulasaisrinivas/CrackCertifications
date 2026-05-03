@@ -1,3 +1,4 @@
+import MarkdownText from './MarkdownText';
 import '../styles/QuestionCard.css';
 
 export default function QuestionCard({
@@ -91,7 +92,7 @@ export default function QuestionCard({
           {explanation && (
             <div className="explanation">
               <strong>💡 Explanation</strong>
-              <p>{explanation}</p>
+              <MarkdownText text={explanation} />
             </div>
           )}
         </div>

@@ -64,3 +64,33 @@
   }
 }
 
+/* Pause Overlay */
+.quiz-paused-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.quiz-paused-card {
+  text-align: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3rem 4rem;
+}
+
+.quiz-paused-card h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.quiz-paused-card p {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+.btn-pause {
+  font-size: 0.85rem;
+  padding: 0.4rem 1rem;
+}

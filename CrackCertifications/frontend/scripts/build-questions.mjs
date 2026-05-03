@@ -12,6 +12,7 @@ import { dirname, join } from 'path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const MD_PATH = join(ROOT, '..', 'questions.md');
+const MD_EXPLANATIONS_PATH = join(ROOT, '..', 'question_new.md');
 const OUT_PATH = join(ROOT, 'src', 'data', 'questions.js');
 
 // --- Crypto helpers (same logic used in the browser at runtime) ---
@@ -31,10 +32,37 @@ function encrypt(plaintext, key) {
   return iv.toString('base64') + ':' + encrypted;
 }
 
-// --- Parse question_new.md ---
+// --- Parse questions.md (main source) ---
 
 let content = readFileSync(MD_PATH, 'utf8').replace(/\r\n/g, '\n');
 const blocks = content.split(/\n---\n/).filter(b => /## Q\d+/.test(b));
+
+// --- Parse question_new.md for explanations ---
+let explanationMap = {};
+try {
+  const expContent = readFileSync(MD_EXPLANATIONS_PATH, 'utf8').replace(/\r\n/g, '\n');
+  const expBlocks = expContent.split(/\n---\n/).filter(b => /## Q\d+/.test(b));
+  expBlocks.forEach(block => {
+    const idMatch = block.match(/## Q(\d+)/);
+    if (!idMatch) return;
+    const id = parseInt(idMatch[1]);
+    const lines = block.split('\n');
+    const expIdx = lines.findIndex(l => l.startsWith('**Explanation'));
+    if (expIdx >= 0) {
+      // Collect all lines after **Explanation:** until end of block
+      const expLines = [];
+      for (let i = expIdx + 1; i < lines.length; i++) {
+        const l = lines[i].trim();
+        if (l === '' && expLines.length === 0) continue; // skip leading blanks
+        expLines.push(lines[i]);
+      }
+      explanationMap[id] = expLines.join('\n').trim();
+    }
+  });
+  console.log(`📖 Loaded explanations for ${Object.keys(explanationMap).length} questions from question_new.md`);
+} catch (e) {
+  console.warn('⚠️ Could not read question_new.md for explanations:', e.message);
+}
 
 const questions = blocks.map(block => {
   const lines = block.split('\n');
@@ -75,6 +103,19 @@ const questions = blocks.map(block => {
   let explanation = '';
   if (expIdx >= 0) {
     explanation = lines.slice(expIdx + 1).join(' ').replace(/\s+/g, ' ').trim();
+  }
+  // Fallback: use explanation from question_new.md
+  if (!explanation && explanationMap[id]) {
+    explanation = explanationMap[id].replace(/\s+/g, ' ').trim();
+  }
+  // Auto-generate fallback if still empty
+  if (!explanation && correctAnswers.length > 0) {
+    const correctOptionTexts = correctAnswers.map(label => {
+      const opt = options.find(o => o.label === label);
+      return opt ? `${label}. ${opt.text}` : label;
+    });
+    explanation = `The correct answer${correctAnswers.length > 1 ? 's are' : ' is'} ${correctOptionTexts.join(' and ')}. ` +
+      `This is the most accurate choice based on the GitHub Copilot certification (GH-300) exam objectives.`;
   }
 
   // Hash the correct answers
@@ -142,6 +183,17 @@ const backendQuestions = blocks.map(block => {
   let explanation = '';
   if (expIdx >= 0) {
     explanation = lines.slice(expIdx + 1).join(' ').replace(/\s+/g, ' ').trim();
+  }
+  if (!explanation && explanationMap[id]) {
+    explanation = explanationMap[id].replace(/\s+/g, ' ').trim();
+  }
+  if (!explanation && correctAnswers.length > 0) {
+    const correctOptionTexts = correctAnswers.map(label => {
+      const opt = options.find(o => o.label === label);
+      return opt ? `${label}. ${opt.text}` : label;
+    });
+    explanation = `The correct answer${correctAnswers.length > 1 ? 's are' : ' is'} ${correctOptionTexts.join(' and ')}. ` +
+      `This is the most accurate choice based on the GitHub Copilot certification (GH-300) exam objectives.`;
   }
 
   return { id, type, text, options, correctAnswers, explanation };

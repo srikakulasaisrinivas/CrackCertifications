@@ -58,6 +58,23 @@ body {
   color: var(--primary-light);
 }
 
+.app-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.app-nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.app-nav a:hover {
+  color: var(--primary-light);
+}
+
 .app-content {
   flex: 1;
   padding: 2rem;
@@ -135,3 +152,14 @@ body {
     padding: 1rem;
   }
 }
+
+/* Explanation text */
+.markdown-text {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+.markdown-text p {
+  margin: 0.4rem 0;
+}
+

@@ -4,7 +4,7 @@
 }
 
 .home-hero {
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 
 .home-title {
@@ -20,12 +20,82 @@
 .home-subtitle {
   font-size: 1.3rem;
   color: var(--text-muted);
-  margin-bottom: 2.5rem;
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
 }
 
+/* Certification Section */
+.cert-section {
+  margin-bottom: 4rem;
+}
+
+.section-heading {
+  font-size: 1.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.cert-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-top: 4px solid;
+  border-radius: var(--radius);
+  padding: 2rem 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center;
+}
+
+.cert-available {
+  cursor: pointer;
+}
+
+.cert-available:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 30px rgba(99, 102, 241, 0.2);
+}
+
+.cert-coming {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.cert-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.cert-title {
+  font-size: 1.15rem;
+  margin-bottom: 0.3rem;
+}
+
+.cert-subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.2rem;
+}
+
+.cert-badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid var(--warning);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: var(--warning);
+  font-weight: 600;
+}
+
+/* Features */
 .home-features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -66,4 +136,3 @@
     font-size: 2.2rem;
   }
 }
-

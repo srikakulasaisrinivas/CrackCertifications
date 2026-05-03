@@ -56,8 +56,8 @@ export async function findCorrectAnswers(questionId, optionLabels, storedHash, t
       if (hash === storedHash) return [label];
     }
   } else {
-    // Multi-select: try combinations of 2 and 3
-    for (let size = 2; size <= 3; size++) {
+    // Multi-select: try combinations of 2, 3, and 4
+    for (let size = 2; size <= Math.min(4, optionLabels.length); size++) {
       const combos = getCombinations(optionLabels, size);
       for (const combo of combos) {
         const hash = await hashAnswer(questionId, combo.sort());

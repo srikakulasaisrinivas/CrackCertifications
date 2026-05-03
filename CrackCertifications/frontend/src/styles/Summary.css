@@ -117,7 +117,7 @@
 
 .detail-item {
   display: grid;
-  grid-template-columns: 50px 30px 1fr auto;
+  grid-template-columns: 50px 30px 1fr 30px;
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
@@ -153,12 +153,6 @@
   text-overflow: ellipsis;
 }
 
-.detail-answer {
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  white-space: nowrap;
-}
-
 .detail-explanation {
   padding: 1rem 1.25rem;
   margin: 0 0 0.4rem 0;
@@ -187,17 +181,89 @@
   to { opacity: 1; max-height: 500px; }
 }
 
+.detail-expand {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.detail-expanded {
+  padding: 1.25rem;
+  margin: 0 0 0.4rem 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  animation: slideDown 0.2s ease;
+}
+
+.detail-full-question h4 {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.detail-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.detail-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.88rem;
+}
+
+.detail-opt-correct {
+  border-color: var(--success);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.detail-opt-wrong {
+  border-color: var(--danger);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.detail-opt-label {
+  font-weight: 700;
+  min-width: 24px;
+}
+
+.detail-opt-text {
+  flex: 1;
+}
+
+.detail-opt-tag {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(239, 68, 68, 0.2);
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.detail-opt-tag.correct-tag {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--success);
+}
+
 .summary-actions {
   text-align: center;
   padding: 2rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
 }
 
 @media (max-width: 768px) {
   .detail-item {
-    grid-template-columns: 40px 25px 1fr;
-  }
-  .detail-answer {
-    display: none;
+    grid-template-columns: 40px 25px 1fr 20px;
   }
 }
 
