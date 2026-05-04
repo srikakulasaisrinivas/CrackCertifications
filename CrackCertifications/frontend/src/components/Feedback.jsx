@@ -5,18 +5,38 @@ export default function Feedback() {
   const [form, setForm] = useState({ name: '', email: '', type: 'bug', message: '' });
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
-    const subject = encodeURIComponent(`[CrackCert Feedback] ${form.type} — from ${form.name}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\nType: ${form.type}\n\n${form.message}`
-    );
-    const feedbackEmail = import.meta.env.VITE_FEEDBACK_EMAIL || 'srikakulasaisrinivas@gmail.com';
-    window.open(`mailto:${feedbackEmail}?subject=${subject}&body=${body}`, '_blank');
-    setSending(false);
-    setSent(true);
+    setError('');
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: import.meta.env.VITE_WEB3FORMS_KEY,
+          subject: `[CrackCert Feedback] ${form.type} — from ${form.name}`,
+          from_name: form.name,
+          email: form.email,
+          type: form.type,
+          message: form.message,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setSent(true);
+      } else {
+        setError('Failed to send feedback. Please try again.');
+      }
+    } catch {
+      setError('Network error. Please try again later.');
+    } finally {
+      setSending(false);
+    }
   };
 
   if (sent) {
@@ -24,7 +44,7 @@ export default function Feedback() {
       <div className="feedback">
         <div className="feedback-success">
           <h2>✅ Thank you for your feedback!</h2>
-          <p>Your email client should have opened. If not, please email us directly.</p>
+          <p>Your feedback has been sent successfully. We'll review it soon.</p>
         </div>
       </div>
     );
@@ -34,6 +54,7 @@ export default function Feedback() {
     <div className="feedback">
       <h2>💬 Share Your Feedback</h2>
       <p className="feedback-subtitle">Help us improve CrackCertification — report bugs, suggest features, or flag incorrect questions.</p>
+      {error && <p className="feedback-error">{error}</p>}
       <form className="feedback-form" onSubmit={handleSubmit}>
         <div className="feedback-row">
           <input
@@ -65,7 +86,7 @@ export default function Feedback() {
           onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
         />
         <button type="submit" className="btn btn-primary btn-lg" disabled={sending}>
-          📧 Send Feedback
+          {sending ? '⏳ Sending...' : '📧 Send Feedback'}
         </button>
       </form>
     </div>
