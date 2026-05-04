@@ -13,7 +13,8 @@ export default function Feedback() {
     const body = encodeURIComponent(
       `Name: ${form.name}\nEmail: ${form.email}\nType: ${form.type}\n\n${form.message}`
     );
-    window.open(`mailto:srikakulasaisrinivas@gmail.com?subject=${subject}&body=${body}`, '_blank');
+    const feedbackEmail = import.meta.env.VITE_FEEDBACK_EMAIL || 'srikakulasaisrinivas@gmail.com';
+    window.open(`mailto:${feedbackEmail}?subject=${subject}&body=${body}`, '_blank');
     setSending(false);
     setSent(true);
   };

@@ -31,6 +31,17 @@ export default function ModeSelect() {
           </ul>
           <button className="btn btn-secondary">Start Exam</button>
         </div>
+        <div className="mode-card" onClick={() => navigate('/study-notes')}>
+          <span className="mode-icon">📖</span>
+          <h3>Study Notes</h3>
+          <ul>
+            <li>Review all questions with answers</li>
+            <li>See correct answers and explanations</li>
+            <li>Search and filter questions</li>
+            <li>Quick revision before exam</li>
+          </ul>
+          <button className="btn btn-primary">Open Notes</button>
+        </div>
       </div>
     </div>
   );

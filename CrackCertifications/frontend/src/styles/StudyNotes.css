@@ -1,0 +1,119 @@
+.study-notes {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.study-notes h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.study-subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.study-loading {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin-top: 2rem;
+}
+
+.study-search {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  color: var(--text);
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  outline: none;
+}
+
+.study-search:focus {
+  border-color: var(--primary);
+}
+
+.study-count {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.study-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.study-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.study-item:hover {
+  border-color: var(--primary);
+}
+
+.study-item-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.study-num {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.study-question {
+  flex: 1;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.study-toggle {
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.study-item-body {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.study-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.study-bullets li {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.93rem;
+  line-height: 1.5;
+  color: var(--text);
+  border-left: 3px solid var(--primary);
+  padding-left: 0.75rem;
+  background: rgba(99, 102, 241, 0.04);
+  border-radius: 0 4px 4px 0;
+}

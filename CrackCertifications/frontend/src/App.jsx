@@ -3,6 +3,7 @@ import Home from './components/Home';
 import ModeSelect from './components/ModeSelect';
 import Quiz from './components/Quiz';
 import Feedback from './components/Feedback';
+import StudyNotes from './components/StudyNotes';
 import './index.css';
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/mode" element={<ModeSelect />} />
             <Route path="/quiz/:mode" element={<Quiz />} />
+            <Route path="/study-notes" element={<StudyNotes />} />
             <Route path="/feedback" element={<Feedback />} />
           </Routes>
         </main>

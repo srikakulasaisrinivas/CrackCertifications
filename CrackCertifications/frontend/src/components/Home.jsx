@@ -87,6 +87,11 @@ export default function Home() {
           <h3>Track Progress</h3>
           <p>Review your performance and flagged questions</p>
         </div>
+        <div className="feature-card">
+          <span className="feature-icon">📖</span>
+          <h3>Study Notes</h3>
+          <p>Review all questions with answers and explanations</p>
+        </div>
       </div>
     </div>
   );
